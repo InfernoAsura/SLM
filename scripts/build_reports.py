@@ -186,6 +186,10 @@ class Doc:
         self.p(caption, align="center", size=cap_size, italic=True)
 
     def save(self, path):
+        cp = self.d.core_properties
+        cp.author = cp.last_modified_by = "Aditya"
+        cp.comments = cp.keywords = cp.subject = ""
+        cp.title = self.d.paragraphs[0].text
         self.d.save(path)
         print("wrote", path)
 
@@ -215,7 +219,7 @@ def build_writeup():
     D = Doc(base_pt=9.5, margins=0.7)
     D.h("Small Language Model from Scratch: Writeup", 1)
     D.p(f"TinyStories V2 (GPT-4). Model: {i(NP)} parameters, 4 layers, d_model 512, 16 heads, d_ff 1,344, RoPE, SwiGLU, RMSNorm, "
-        f"10,000-token byte-level BPE. Trained on one NVIDIA RTX 5060 Laptop GPU in fp16 (autocast + GradScaler, no bf16, so the "
+        f"10,000-token byte-level BPE. Trained on a single GPU in fp16 (autocast + GradScaler, no bf16, so the "
         f"same code runs on a Colab/Kaggle T4). Final validation loss {f(MAIN['final_val_loss'], 4)}, perplexity {f(MAIN['final_val_perplexity'], 2)}. "
         f"All {48} pytest tests pass. Every number below comes from the scripts in scripts/ and the logs in runs/.")
 
@@ -323,8 +327,8 @@ def build_writeup():
     D.figure(FIG("main_run.png"), 6.6, "Main run: 5,000 steps × 32 × 256 = 40,960,000 tokens, peak lr 3e-3, 250 warm-up steps, cosine to 3e-4 exactly at the last step.")
     D.p(f"**Final validation loss {f(MAIN['final_val_loss'], 4)}, perplexity {f(MAIN['final_val_perplexity'], 2)}** (50 fixed validation batches = 409,600 held-out tokens; "
         f"mean training loss over the last 100 steps {f(train_last100, 3)}, so no overfitting: the model saw only 7.6% of the training tokens once). "
-        f"Training took {f(active_s, 0)} s (7.0 min) including {f(compile_s, 0)} s of compilation. The raw log says {f(MAIN['train_seconds'], 0)} s because Windows put "
-        f"the laptop into Modern Standby for {f(standby, 0)} s during one step (confirmed in the Windows event log); the run continued correctly afterwards.")
+        f"Training took {f(active_s, 0)} s (7.0 min) including {f(compile_s, 0)} s of compilation. The raw log says {f(MAIN['train_seconds'], 0)} s because my computer "
+        f"went to sleep for {f(standby, 0)} s during one step; the run continued correctly afterwards.")
     D.p("**Stories** (prompt \"Once upon a time\"; full texts in report/stories.txt). Left alone the model ends its stories after a median of "
         f"{f(nat['T=0.7,p=0.9']['median'], 0)} tokens ({nat['T=0.7,p=0.9']['min']}-{nat['T=0.7,p=0.9']['max']} over 20 seeds), so for the required ≥256-token stories "
         "<|endoftext|> was blocked until 256 tokens (--min-new-tokens).")
@@ -341,7 +345,7 @@ def build_writeup():
         "the model from config.json, loads the weights with map_location, and prints the story and a tokens/s line. Acceptance test: I copied exactly the "
         "files git would commit into a new folder, created a fresh venv, installed only requirements.txt (torch, regex, einops, numpy) and ran the README "
         "command on the CPU. It printed the same story as my development environment, and two runs with --seed 42 were identical.")
-    D.p("**Q11. ** ", f"On an AMD Ryzen 7 260 laptop CPU (8 cores, PyTorch used 8 threads, 15 GB RAM, Windows 11) generating 256 tokens runs at 25.3-26.3 tokens/s "
+    D.p("**Q11. ** ", f"On the CPU, generating 256 tokens runs at 25.3-26.3 tokens/s "
         f"(30-34 tokens/s for the natural 148-token story). Without a cache, step k re-runs the model over all min(4+k, 256) tokens: "
         f"{i(KV['positions_nocache'])} token positions for 256 new tokens instead of {KV['positions_cache']}, so {f(100 * (1 - KV['positions_cache'] / KV['positions_nocache']), 1)}% "
         f"of the work is repeated. I measured a forward pass at {f(KV['forward_ms_by_len']['1'], 1)} ms for 1 token and {f(KV['forward_ms_by_len']['256'], 1)} ms for 256 tokens; "
@@ -353,7 +357,7 @@ def build_writeup():
     D.p("**Bugs (fixed):** (1) my first story-boundary test passed even without splitting on <|endoftext|>, which I found by running the training without the "
         "split; I rewrote it. (2) Resuming on the GPU crashed because map_location='cuda' moved the saved RNG states to the GPU (torch.set_rng_state needs a CPU "
         "tensor); the fp16 resume test caught it. (3) torch.compile failed on Windows without Triton; fixed with triton-windows (Colab/Kaggle on Linux need nothing). "
-        "**Not bugs:** the NaNs at lr ≥ 3e-2 (fp16 overflow after real divergence, see Q9); the 631 s gap in the main-run log (laptop standby); "
+        "**Not bugs:** the NaNs at lr ≥ 3e-2 (fp16 overflow after real divergence, see Q9); the 631 s gap in the main-run log (the computer went to sleep); "
         "repeated morals, generic plots and logic slips (limits of a 22.7M model trained on 41M tokens for 7 minutes).")
     D.save(R("report", "writeup.docx"))
 
@@ -372,16 +376,15 @@ def build_project_report():
 
     D.h("The short result", 2)
     D.bullet(f"My model has {i(NP)} learned numbers (parameters), about 22.7 million.")
-    D.bullet(f"It trained for about 7 minutes on my laptop's NVIDIA RTX 5060 GPU, using fp16 (half precision), the same setting a free Colab or Kaggle T4 GPU uses.")
+    D.bullet(f"It trained for about 7 minutes on a single GPU, using fp16 (half precision), the same setting a free Colab or Kaggle T4 GPU uses.")
     D.bullet(f"Its final score on stories it never trained on (validation loss) is {f(MAIN['final_val_loss'], 4)}. The stretch target was 2.0 or lower, and lower is better, so I beat it.")
     D.bullet("It writes stories that read well sentence by sentence, but the plots are simple and it repeats itself when a story is forced to be long.")
     D.bullet("Anyone can run it on a normal laptop with one command, no GPU needed. I checked this in a brand new Python environment.")
     D.p("The rest of this document explains what I understood at each step, what I measured, and what went wrong along the way.")
 
     D.h("How I worked", 2)
-    D.p("**Where I did what. **", "I wrote and tested all the code on my own Windows laptop in a Python virtual environment. The laptop has an AMD Ryzen 7 260 "
-        "processor, 15 GB of memory and an NVIDIA RTX 5060 Laptop GPU with 8 GB. The GPU supports bf16, a newer number format, but I deliberately did not use it, "
-        "because the free T4 GPUs on Colab and Kaggle do not support it well. Everything uses fp16 with a gradient scaler, or plain fp32, so the same code runs "
+    D.p("**Where I did what. **", "I wrote and tested all the code on my own computer in a Python virtual environment and trained the model on its GPU. "
+        "That GPU supports bf16, a newer number format, but I deliberately did not use it, because the free T4 GPUs on Colab and Kaggle do not support it well. Everything uses fp16 with a gradient scaler, or plain fp32, so the same code runs "
         "on those free GPUs too. I also added a small notebook (notebooks/colab_kaggle.ipynb) that only runs commands; all the real code lives in .py files, as the assignment requires.")
     D.p("**Tests first. **", "For every piece I wrote a pytest test before moving on. The tests check things I can predict in advance, such as shapes, a hand-worked "
         "answer, or that the model cannot see the future. By the end I had 48 passing tests (two of them need a GPU and are skipped on a computer without one).")
@@ -403,7 +406,7 @@ def build_project_report():
         ["Main run", f"5,000 steps, about 41 million tokens, {f(active_s, 0)} seconds of training"],
         ["Final validation loss", f(MAIN["final_val_loss"], 4)],
         ["Perplexity", f(MAIN["final_val_perplexity"], 2)],
-        ["Speed on my laptop CPU", "about 26 tokens per second for 256 tokens"],
+        ["Speed on a CPU", "about 26 tokens per second for 256 tokens"],
         ["Size of the saved model", "about 91 MB"],
     ], [2.2, 4.3])
 
@@ -507,8 +510,8 @@ def build_project_report():
         "how many tokens the model is unsure between at each step, so it is about as unsure as choosing between 5 or 6 options. The training loss at the end "
         f"({f(train_last100, 3)}) was almost the same as the validation loss, so the model was not just memorising.")
     D.p(f"The training itself took {f(active_s, 0)} seconds (7 minutes), including about 30 seconds for torch.compile to prepare the model. My log first said "
-        f"{f(MAIN['train_seconds'], 0)} seconds. When I looked, one single step had taken {f(standby, 0)} seconds. The Windows event log showed that the laptop "
-        "had gone into standby because I had left it idle, and woke up 11 minutes later. Training simply continued, and the loss was not affected.")
+        f"{f(MAIN['train_seconds'], 0)} seconds. When I looked, one single step had taken {f(standby, 0)} seconds. The system log showed that my computer "
+        "had gone to sleep because I had left it idle, and woke up 11 minutes later. Training simply continued, and the loss was not affected.")
 
     D.h("Writing stories", 2)
     D.p("To write a story the model predicts one token, adds it to the text, and repeats. Two settings control it. Temperature controls how adventurous it is "
@@ -592,7 +595,7 @@ def build_project_report():
         "when I forced long stories, they repeated morals. The second is temperature and top-p: at 0.7 the text was safe but generic, at 1.0 odd details appeared. "
         "Keeping facts straight (who ate the cake) is the weakest part. I think that comes from the small model and short training.")
     D.h("Q11. How fast is it on a CPU, and what would a cache save?", 3)
-    D.p(f"About 26 tokens per second (25.3 to 26.3) for 256 tokens on my AMD Ryzen 7 260 laptop with 15 GB RAM. Without a cache every new token makes the model read "
+    D.p(f"About 26 tokens per second (25.3 to 26.3) for 256 tokens on the CPU. Without a cache every new token makes the model read "
         f"the whole text again: {i(KV['positions_nocache'])} token positions for 256 new tokens instead of {KV['positions_cache']}, so about 99% of the work is "
         f"repeated. From timing single forward passes ({f(KV['forward_ms_by_len']['1'], 1)} ms for 1 token, {f(KV['forward_ms_by_len']['256'], 1)} ms for 256) I "
         f"estimate {f(KV['est_s_nocache'], 1)} seconds without a cache and about {f(KV['est_s_cache'], 1)} with one, roughly 4 times faster. It is not 99% faster "
@@ -606,8 +609,8 @@ def build_project_report():
     D.bullet("**Resuming crashed on the GPU. **", "Loading a checkpoint straight onto the GPU also moved the saved random number states there, and PyTorch only "
              "accepts them on the CPU. The fp16 resume test caught it before any real run. Lesson: test the same path the real run uses.")
     D.bullet("**torch.compile did not work at first. **", "On Windows it needs an extra package (triton-windows). Colab and Kaggle run Linux and do not need it.")
-    D.bullet("**My timings were wrong twice. **", "The main run looked like it took 17.5 minutes, and a profiling run looked very slow, because the laptop went to "
-             "sleep while idle. I found it in the Windows event log and now report only the real training time. Lesson: when a number looks odd, find out why before reporting it.")
+    D.bullet("**My timings were wrong twice. **", "The main run looked like it took 17.5 minutes, and a profiling run looked very slow, because my computer went to "
+             "sleep while idle. I found it in the system log and now report only the real training time. Lesson: when a number looks odd, find out why before reporting it.")
     D.bullet("**The fresh install failed once. **", "Windows could not install PyTorch in a folder with a very long path. A short folder fixed it.")
 
     D.h("What I could not check, and what I would try next", 2)
@@ -617,7 +620,7 @@ def build_project_report():
     D.bullet("The stories needed the end-of-story token blocked to reach 256 tokens.")
     D.bullet("GPU runs are not bit-for-bit repeatable, so two identical runs differ slightly (in the 3rd or 4th decimal of the loss).")
     D.bullet("The cache speed-up is an estimate from timings, not a measurement.")
-    D.p("As agreed, I did not do the optional extras: the Docker image, the architecture experiment, the KV cache, weight sharing and GPT-2 initialisation.")
+    D.p("I did not do the optional extras, since they were not required: the Docker image, the architecture experiment, the KV cache, weight sharing and GPT-2 initialisation.")
 
     D.h("What I take away", 2)
     D.p("The biggest lesson for me is that the model itself is not the hardest part. Most of the real work was checking that every small piece is correct, because "

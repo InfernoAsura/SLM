@@ -163,7 +163,7 @@ def main_run(runs, out):
     x, y = col("train_loss")
     xv, yv = col("val_loss")
     fig, axes = plt.subplots(1, 2, figsize=(10, 3.6))
-    # The laptop went into Windows Modern Standby once during the run (one step took 631 s).
+    # The computer went to sleep once during the run (one step took 631 s).
     # Remove any pause longer than 60 s so the time axis shows active training time.
     steps = sorted(tmap)
     active, removed, prev = {}, 0.0, 0.0
