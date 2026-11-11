@@ -1,0 +1,4 @@
+torch>=2.4
+regex
+einops
+numpy  # not used by inference.py, but torch prints a warning at import without it

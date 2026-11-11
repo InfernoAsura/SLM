@@ -1,0 +1,88 @@
+{
+  "required": [
+    {
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "seed": 1,
+      "new_tokens": 256,
+      "text": "Once upon a time, in a small house, there lived a little girl named Mia. Mia loved to play outside in her big yard. She liked to run, jump, and laugh with her friends.\nOne day, Mia found a mysterious box in her yard. It was a new toy with a big button on it. She was very curious about what was inside. Mia wanted to know what it was, so she tried to push it.\nMia pushed and pushed, but the button did not move. She was very sad. Then, she heard a voice say, \"Hello, Mia! I am a magic toy. I can do things too!\" Mia was very surprised. She didn't know that the magic toy could do anything.\nMia and her friends played with the magic toy all day. They were very happy and had lots of fun together. When the sun went down, they went back to their cozy house, Mia said, \"Thank you for finding my magic toy!\" The mysterious box was filled with fun surprises, and Mia and her friends played with the magic toy all day long.\nThe moral of the story is that sometimes, we don't know when we feel helpless or sad.\nThe moral of the story is that it is important to be kind and help",
+      "natural_stop_tokens": 220
+    },
+    {
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "seed": 2,
+      "new_tokens": 256,
+      "text": "Once upon a time, there was a little girl named Lily. She had a toy that she loved to play with. One day, she went to the park with her mom.\nAt the park, Lily saw a big, yummy cake. She wanted to eat it all by herself. She asked her mom, \"Can I have a bite of the cake?\" Her mom said, \"Yes, but be careful.\"\nLily took a bite of the cake. It was so yummy! She took a big bite and smiled. She was happy that she shared the cake with her friends. They all had a great time at the park.\nWhen it was time to go home, Lily gave the cake to her mom. Her mom said, \"I'm glad you ate the cake. I had a fun day at the park.\" Lily smiled and said, \"I love you, mom!\"\nFrom that day on, Lily always shared her toys with her friends. She learned that sharing and being kind can make everyone happy.\nThe moral of the story is to share and be kind to everyone, no matter what we do.\nThe moral of the story is to always be kind and share with others.\nThe moral of the story is that sharing is caring and makes everyone happy.\n",
+      "natural_stop_tokens": 125
+    },
+    {
+      "temperature": 1.0,
+      "top_p": 0.95,
+      "seed": 1,
+      "new_tokens": 256,
+      "text": "Once upon a time, in a modest little town, there lived a funny man named Tom. He loved to drive his truck around his town. One day, he saw a man selling ice cream in the house. He had a dog named Spot. Spot was very nice and happy.\nTom wanted to drive the truck and see the ice cream. He asked his friend, Sam, \"Can we get the ice cream?\" Sam said, \"Yes, let's go!\" So, Tom and Sam drove to the shop. They were both so happy to see their new cones.\nAs they walked to the park, they saw a big box. The box had a picture of a cake. When they got closer, they looked at each other and felt something in the sky. Tom and Spot were confused. They opened the box and found a big, round balloon inside. It was perfect for them! They were so happy and played with the balloon all day.\nThe moral of the story is that we need to share our things with others and help everyone in need.\nAnd that is the day they all became the best of friends.\nAnd from that day on, they would always share stories together.\nThe End.\n\nThe moral of the story is: Sharing makes everyone happy",
+      "natural_stop_tokens": 190
+    }
+  ],
+  "natural_lengths": {
+    "T=0.7,p=0.9": {
+      "lengths": [
+        227,
+        153,
+        166,
+        186,
+        147,
+        153,
+        141,
+        190,
+        209,
+        153,
+        190,
+        165,
+        218,
+        195,
+        143,
+        194,
+        147,
+        143,
+        208,
+        173
+      ],
+      "median": 169.5,
+      "min": 141,
+      "max": 227
+    },
+    "T=1.0,p=0.95": {
+      "lengths": [
+        161,
+        231,
+        204,
+        149,
+        180,
+        162,
+        140,
+        164,
+        169,
+        155,
+        152,
+        173,
+        218,
+        243,
+        136,
+        198,
+        223,
+        191,
+        133,
+        182
+      ],
+      "median": 171.0,
+      "min": 133,
+      "max": 243
+    }
+  },
+  "greedy": {
+    "new_tokens": 145,
+    "text": "Once upon a time, there was a little girl named Lily. She loved to play with her toys and eat yummy food. One day, Lily found a big, red apple in her yard. She was very happy and wanted to eat it.\nLily took the apple home and showed it to her mom. \"Look, Mom! I found a big apple!\" she said. Her mom smiled and said, \"That's a very nice apple, Lily. But be careful, it's not safe to eat too much.\"\nLily took a small bite of the apple. It was so good! She was happy that she could eat the apple. She ate it all up and said, \"Thank you, Mom! I love it!\"\n"
+  }
+}

@@ -1,0 +1,15 @@
+# data and big intermediate files (only release/model.pt is committed)
+data/
+artifacts/
+runs/
+*.npy
+*.pt
+!release/model.pt
+
+# python / tooling
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/

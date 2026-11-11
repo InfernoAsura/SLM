@@ -1,0 +1,35 @@
+=== temperature 0.7, top-p 0.9, seed 1: 256 new tokens (<|endoftext|> blocked until 256; left alone the model stops after 220 tokens) ===
+Once upon a time, in a small house, there lived a little girl named Mia. Mia loved to play outside in her big yard. She liked to run, jump, and laugh with her friends.
+One day, Mia found a mysterious box in her yard. It was a new toy with a big button on it. She was very curious about what was inside. Mia wanted to know what it was, so she tried to push it.
+Mia pushed and pushed, but the button did not move. She was very sad. Then, she heard a voice say, "Hello, Mia! I am a magic toy. I can do things too!" Mia was very surprised. She didn't know that the magic toy could do anything.
+Mia and her friends played with the magic toy all day. They were very happy and had lots of fun together. When the sun went down, they went back to their cozy house, Mia said, "Thank you for finding my magic toy!" The mysterious box was filled with fun surprises, and Mia and her friends played with the magic toy all day long.
+The moral of the story is that sometimes, we don't know when we feel helpless or sad.
+The moral of the story is that it is important to be kind and help
+
+=== temperature 0.7, top-p 0.9, seed 2: 256 new tokens (<|endoftext|> blocked until 256; left alone the model stops after 125 tokens) ===
+Once upon a time, there was a little girl named Lily. She had a toy that she loved to play with. One day, she went to the park with her mom.
+At the park, Lily saw a big, yummy cake. She wanted to eat it all by herself. She asked her mom, "Can I have a bite of the cake?" Her mom said, "Yes, but be careful."
+Lily took a bite of the cake. It was so yummy! She took a big bite and smiled. She was happy that she shared the cake with her friends. They all had a great time at the park.
+When it was time to go home, Lily gave the cake to her mom. Her mom said, "I'm glad you ate the cake. I had a fun day at the park." Lily smiled and said, "I love you, mom!"
+From that day on, Lily always shared her toys with her friends. She learned that sharing and being kind can make everyone happy.
+The moral of the story is to share and be kind to everyone, no matter what we do.
+The moral of the story is to always be kind and share with others.
+The moral of the story is that sharing is caring and makes everyone happy.
+
+
+=== temperature 1.0, top-p 0.95, seed 1: 256 new tokens (<|endoftext|> blocked until 256; left alone the model stops after 190 tokens) ===
+Once upon a time, in a modest little town, there lived a funny man named Tom. He loved to drive his truck around his town. One day, he saw a man selling ice cream in the house. He had a dog named Spot. Spot was very nice and happy.
+Tom wanted to drive the truck and see the ice cream. He asked his friend, Sam, "Can we get the ice cream?" Sam said, "Yes, let's go!" So, Tom and Sam drove to the shop. They were both so happy to see their new cones.
+As they walked to the park, they saw a big box. The box had a picture of a cake. When they got closer, they looked at each other and felt something in the sky. Tom and Spot were confused. They opened the box and found a big, round balloon inside. It was perfect for them! They were so happy and played with the balloon all day.
+The moral of the story is that we need to share our things with others and help everyone in need.
+And that is the day they all became the best of friends.
+And from that day on, they would always share stories together.
+The End.
+
+The moral of the story is: Sharing makes everyone happy
+
+=== greedy (temperature 0): 145 new tokens ===
+Once upon a time, there was a little girl named Lily. She loved to play with her toys and eat yummy food. One day, Lily found a big, red apple in her yard. She was very happy and wanted to eat it.
+Lily took the apple home and showed it to her mom. "Look, Mom! I found a big apple!" she said. Her mom smiled and said, "That's a very nice apple, Lily. But be careful, it's not safe to eat too much."
+Lily took a small bite of the apple. It was so good! She was happy that she could eat the apple. She ate it all up and said, "Thank you, Mom! I love it!"
+
